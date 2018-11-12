@@ -144,6 +144,10 @@ init:
             easein 0.1 yalign 0.5
             easein 0.1 rotate 0
     transform punch_win:
+        easein 0.5 zoom 1.0
+        easein 0.1 xalign 0.5
+        easein 0.1 yalign 0.5
+        easein 0.1 rotate 0
         easein 2 ypos 0.9
         easein 0.75 rotate 5
         easein 0.75 rotate -5
@@ -154,6 +158,10 @@ init:
         easein 0.75 ypos 0.99
 
     transform punch_lose:
+        easein 0.5 zoom 1.0
+        easein 0.1 xalign 0.5
+        easein 0.1 yalign 0.5
+        easein 0.1 rotate 0
         easeout 0.5 zoom 2
         easein 2 ypos 0.8
         easein 0.75 rotate 5
@@ -168,18 +176,29 @@ init:
 
 init python:
 
+    rpg_help = 0
+    not_av = 0
+    haction = ""
+    if_heal = ''
+    mob_sec = renpy.random.randint (1, 3)
     hero_hmax = 100
+    hero_hmax = 101
     hero_h = 100
+    hero_heal = 50
     mob_hmax = 100
     mob_h = 100
     hero_state = True
     mob_life = True
-    haction = "Nothing"
+    mob_name = ''
+    mob_mxp = 3
+    mob_speed_min = 1
+    mob_speed_max = 3
+
 
     def pnch(hero_state):
         if_heal = ''
         global if_heal
-        mob_sec = renpy.random.randint (1, 3)
+        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
         hero_bonus = renpy.random.randint (1, 2)
         hero_pow = renpy.random.randint (5, 10) * hero_bonus
@@ -205,7 +224,6 @@ init python:
             renpy.show(mob_name, [punch_2])
             renpy.show(randbg, [punch_bg])
             renpy.jump('check')
-
 
     def defn(hero_state):
         not_av = 0
@@ -238,9 +256,9 @@ init python:
     def noth(hero_state):
         if_heal = ''
         global if_heal
-        mob_sec = renpy.random.randint (1, 3)
+        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
-        mob_pow = (renpy.random.randint (1, 20) * renpy.random.randint (1, 3))
+        mob_pow = (renpy.random.randint (5, 10) * renpy.random.randint (1, mob_mxp))
         defrand = renpy.random.randint (1, 2)
         if defrand == 2:
             not_av = 1
@@ -262,10 +280,12 @@ init python:
             renpy.show(randbg, [punch_me_bg])
             renpy.jump('check')
 
+
+
     def heal(hero_state):
         if_heal = ''
         global if_heal
-        mob_sec = renpy.random.randint (1, 3)
+        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
         defrand = renpy.random.randint (1, 2)
         if defrand == 2:
@@ -275,7 +295,7 @@ init python:
             global healed_h
             if_heal = "+" + str(healed_h) + " HP"
             global if_heal
-            haction = "Я восстановил" + str(healed_h) + " HP"
+            haction = "Я восстановил " + str(healed_h) + " HP"
             global haction
             renpy.play('defend.mp3', channel = 'sound')
             renpy.jump('check')
@@ -289,11 +309,10 @@ init python:
             if_heal = "+" + str(healed_h) + " HP"
             global if_heal
             mob_h += healed_m
-            haction = "Я восстановил" + str(healed_h) + " HP"
+            haction = "Я восстановил " + str(healed_h) + " HP"
             global haction
             renpy.play('defend.mp3', channel = 'sound')
             renpy.jump('check')
-
 
     def runaway():
         renpy.jump('prep')
@@ -326,13 +345,40 @@ label prep:
     $if_heal = ''
     $mob_sec = renpy.random.randint (1, 3)
     $hero_hmax = 100
+    $hero_hmax = 101
     $hero_h = 100
+    $hero_heal = 50
     $mob_hmax = 100
     $mob_h = 100
     $hero_state = True
     $mob_life = True
     $mob_name = ''
+    $mob_mxp = 3
+    $mob_speed_min = 1
+    $mob_speed_max = 3
     scene anim prolog_1 with dspr
+    menu:
+        "{size=40}{font=battle_f.ttf}{b}Выбери кол-во здоровья:{/b}{/font}"
+        "{font=battle_f.ttf}Легкий{/font}":
+            $hero_hmax = 200
+            $hero_hmaxi = 201
+            $hero_h = 200
+            $hero_heal = 100
+        "{font=battle_f.ttf}Средний{/font}":
+            $hero_hmax = 100
+            $hero_hmaxi = 101
+            $hero_h = 100
+            $hero_heal = 50
+        "{font=battle_f.ttf}Сложный{/font}":
+            $hero_hmax = 75
+            $hero_hmaxi = 76
+            $hero_h = 75
+            $hero_heal = 25
+        "{font=battle_f.ttf}{color=#f00}Даже не пытайся{/color}{/font}":
+            $hero_hmax = 50
+            $hero_hmaxi = 51
+            $hero_h = 50
+            $hero_heal = 25
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери противника:{/b}{/font}"
         "{size=40}{font=battle_f.ttf}{b}Легкие:{/b}{/font}{/size}"
@@ -341,64 +387,100 @@ label prep:
             $mob_nmn = 'Ульяна'
             $mob_hmax = 50
             $mob_h = 50
+            $mob_speed_min = 1
+            $mob_speed_max = 2
+            $mob_mxp = 2
         "{font=battle_f.ttf}Женя{/font}":
             $mob_name = 'mz rage pioneer far'
             $mob_nmn = 'Женя'
             $mob_hmax = 80
             $mob_h = 80
+            $mob_speed_min = 2
+            $mob_speed_max = 3
+            $mob_mxp = 4
         "{font=battle_f.ttf}Юля{/font}":
             $mob_name = 'uv rage far'
             $mob_nmn = 'Юля'
             $mob_hmax = 85
             $mob_h = 85
+            $mob_speed_min = 1
+            $mob_speed_max = 2
+            $mob_mxp = 5
         "{font=battle_f.ttf}Электроник{/font}":
             $mob_name = 'el angry pioneer far'
             $mob_nmn = 'Электроник'
             $mob_hmax = 90
             $mob_h = 90
+            $mob_speed_min = 1
+            $mob_speed_max = 4
+            $mob_mxp = 3
         "{size=40}{font=battle_f.ttf}{b}Средние:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Мику{/font}":
             $mob_name = 'mi rage pioneer far'
             $mob_nmn = 'Мику'
             $mob_hmax = 95
             $mob_h = 95
+            $mob_speed_min = 1
+            $mob_speed_max = 2
+            $mob_mxp = 6
         "{font=battle_f.ttf}Пионер{/font}":
             $mob_name = 'pi normal'
             $mob_nmn = 'Пионер'
             $mob_hmax = 100
             $mob_h = 100
+            $mob_speed_min = 1
+            $mob_speed_max = 3
+            $mob_mxp = 4
         "{font=battle_f.ttf}Шурик{/font}":
             $mob_name = 'sh rage pioneer far'
             $mob_nmn = 'Шурик'
             $mob_hmax = 110
             $mob_h = 110
+            $mob_speed_min = 1
+            $mob_speed_max = 2
+            $mob_mxp = 6
         "{font=battle_f.ttf}Алиса{/font}":
             $mob_name = 'dv rage pioneer far'
             $mob_nmn = 'Алиса'
             $mob_hmax = 115
             $mob_h = 115
+            $mob_speed_min = 1
+            $mob_speed_max = 2
+            $mob_mxp = 7
         "{font=battle_f.ttf}Лена{/font}":
             $mob_name = 'un rage pioneer far'
             $mob_nmn = 'Лена'
             $mob_hmax = 120
             $mob_h = 120
+            $mob_speed_min = 1
+            $mob_speed_max = 1
+            $mob_mxp = 8
         "{size=40}{font=battle_f.ttf}{b}Сложные:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Славя{/font}":
             $mob_name = 'sl angry pioneer far'
             $mob_nmn = 'Славя'
             $mob_hmax = 150
             $mob_h = 150
+            $mob_speed_min = 1
+            $mob_speed_max = 1
+            $mob_mxp = 7
         "{font=battle_f.ttf}Ольга Дмитриевна{/font}":
             $mob_name = 'mt rage pioneer far'
             $mob_nmn = 'Ольга Дмитриевна'
             $mob_hmax = 200
             $mob_h = 200
+            $mob_speed_min = 1
+            $mob_speed_max = 1
+            $mob_mxp = 8
         "{size=40}{font=battle_f.ttf}{b}Сверхсложные:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Толян{/font}":
             $mob_name = 'prg_tolyan'
             $mob_nmn = 'Толян'
             $mob_hmax = 1000
             $mob_h = 1000
+            $mob_speed_min = 1
+            $mob_speed_max = 1
+            $mob_mxp = 9
         "{size=40}{font=battle_f.ttf}{b}Покинуть поле боя{/b}{/font}{/size}":
             jump splashscreen
     stop music fadeout 2
@@ -463,7 +545,7 @@ label check:
             renpy.show('anim prolog_1')
             renpy.with_statement(dissolve2, always=False)
             renpy.jump('prep')
-        if hero_h > 101:
+        if hero_h > 201:
             renpy.play('lose.mp3', channel = 'sound')
             renpy.music.stop(channel='music', fadeout=2)
             renpy.show('lose text', [truecenter, textrp])
@@ -542,7 +624,7 @@ screen bat_gui(hero_state):
                     text_style "esrpg_butt"
 
                 null width 25
-                if hero_h < 50:
+                if hero_h < hero_heal:
                     textbutton "Лечиться" action Function(heal, hero_state) at esrpg_butt_t:
                         style "esrpg_butt"
                         text_style "esrpg_butt"
