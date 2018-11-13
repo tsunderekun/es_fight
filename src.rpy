@@ -193,6 +193,8 @@ init python:
     mob_mxp = 3
     mob_speed_min = 1
     mob_speed_max = 3
+    cnt_pnch = 10
+    pnch_ver = 1
 
 
     def pnch(hero_state):
@@ -225,12 +227,49 @@ init python:
             renpy.show(randbg, [punch_bg])
             renpy.jump('check')
 
+    def pnch_v2(hero_state):
+        if_heal = ''
+        global if_heal
+        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
+        global mob_sec
+        hero_pow = renpy.random.randint (5, 10)
+        defrand = renpy.random.randint (1, 2)
+        if defrand == 1:
+            global mob_h
+            mob_h -= hero_pow
+            haction = "Я ударил противника " + mob_nmn + " и отнял " + str(hero_pow) + " HP"
+            global haction
+            cnt_pnch -= 1
+            global cnt_pnch
+            renpy.play('PUNCH.mp3', channel = 'sound')
+            renpy.show(mob_name, [punch_1])
+            renpy.show(randbg, [punch_bg])
+            renpy.jump('check')
+
+        else:
+            cnt_pnch -= 1
+            global cnt_pnch
+            global mob_h
+            mob_h -= 0
+            haction = "Промазал"
+            global haction
+            renpy.play('PUNCH.mp3', channel = 'sound')
+            renpy.show(mob_name, [punch_2])
+            renpy.show(randbg, [punch_bg])
+            renpy.jump('check')
+
     def defn(hero_state):
+        if pnch_ver == 2:
+            cnt_pnch = cnt_pnch_all
+            global cnt_pnch
         not_av = 0
         global not_av
         if_heal = ''
         global if_heal
-        mob_sec = renpy.random.randint (4, 10)
+        if pnch_ver == 2:
+            mob_sec = renpy.random.randint (mob_speed_min + 1, mob_speed_max + 1)
+        else:
+            mob_sec = renpy.random.randint (4, 10)
         global mob_sec
         mob_pow = (renpy.random.randint (0, 4) * renpy.random.randint (1, 3))
         defrand = renpy.random.randint (1, 2)
@@ -262,6 +301,9 @@ init python:
         defrand = renpy.random.randint (1, 2)
         if defrand == 2:
             not_av = 1
+            if pnch_ver == 2:
+                cnt_pnch = 0
+                global cnt_pnch
             global hero_h
             hero_h -= mob_pow
             haction = "Я потерял " + str(mob_pow) + " HP"
@@ -339,13 +381,16 @@ label rpgdsc:
 
 
 label prep:
+    $cnt_pnch = 10
+    $cnt_pnch_all = 10
+    $pnch_ver = 0
     $rpg_help = 0
     $not_av = 0
     $haction = ""
     $if_heal = ''
     $mob_sec = renpy.random.randint (1, 3)
     $hero_hmax = 100
-    $hero_hmax = 101
+    $hero_hmaxi = 101
     $hero_h = 100
     $hero_heal = 50
     $mob_hmax = 100
@@ -356,27 +401,43 @@ label prep:
     $mob_mxp = 3
     $mob_speed_min = 1
     $mob_speed_max = 3
+    $disp_cnt_pnch = ''
     scene anim prolog_1 with dspr
     menu:
-        "{size=40}{font=battle_f.ttf}{b}Выбери кол-во здоровья:{/b}{/font}"
+        "{size=40}{font=battle_f.ttf}{b}Выбери метод ударов:{/b}{/font}"
+        "{font=battle_f.ttf}Радном{/font}":
+            $pnch_ver = 1
+        "{font=battle_f.ttf}Защита{/font}":
+            $pnch_ver = 2
+
+    menu:
+        "{size=40}{font=battle_f.ttf}{b}Выбери сложность:{/b}{/font}"
         "{font=battle_f.ttf}Легкий{/font}":
+            $cnt_pnch = 10
+            $cnt_pnch_all = 10
             $hero_hmax = 200
             $hero_hmaxi = 201
             $hero_h = 200
             $hero_heal = 100
         "{font=battle_f.ttf}Средний{/font}":
+            $cnt_pnch = 8
+            $cnt_pnch_all = 8
             $hero_hmax = 100
-            $hero_hmaxi = 101
+            $hero_hmaxi = 125
             $hero_h = 100
             $hero_heal = 50
         "{font=battle_f.ttf}Сложный{/font}":
+            $cnt_pnch = 4
+            $cnt_pnch_all = 4
             $hero_hmax = 75
-            $hero_hmaxi = 76
+            $hero_hmaxi = 100
             $hero_h = 75
             $hero_heal = 25
         "{font=battle_f.ttf}{color=#f00}Даже не пытайся{/color}{/font}":
+            $cnt_pnch = 3
+            $cnt_pnch_all = 3
             $hero_hmax = 50
-            $hero_hmaxi = 51
+            $hero_hmaxi = 75
             $hero_h = 50
             $hero_heal = 25
     menu:
@@ -518,6 +579,11 @@ label check:
 
     python:
         renpy.hide_screen("bat_gui")
+        disp_cnt_pnch = ' * ' * cnt_pnch
+        if cnt_pnch == 0:
+            not_av == 1
+        if cnt_pnch == cnt_pnch_all:
+            not_av == 0
         if hero_h <= 0:
             hero_state = False
         if hero_h > 0:
@@ -545,7 +611,7 @@ label check:
             renpy.show('anim prolog_1')
             renpy.with_statement(dissolve2, always=False)
             renpy.jump('prep')
-        if hero_h > 201:
+        if hero_h > hero_hmaxi:
             renpy.play('lose.mp3', channel = 'sound')
             renpy.music.stop(channel='music', fadeout=2)
             renpy.show('lose text', [truecenter, textrp])
@@ -574,21 +640,27 @@ screen bat_gui(hero_state):
         ypos 0.025
 
         hbox xalign 0.5 ypos 0.1:
+            vbox:
+                hbox:
+                    hbox:
 
-            hbox:
-
-                text "Мое здоровье:":
-                    style "esrpg_butt"
-                null width 10
-                text "[hero_h]/[hero_hmax] HP" at esrpg_butt_t:
-                    style "esrpg_butt"
-            null width 25
-            hbox:
-                text "Здоровье [mob_nmn]:":
-                    style "esrpg_butt"
-                null width 10
-                text "[mob_h]/[mob_hmax] HP" at esrpg_butt_t:
-                    style "esrpg_butt"
+                        text "Мое здоровье:":
+                            style "esrpg_butt"
+                        null width 10
+                        text "[hero_h]/[hero_hmax] HP" at esrpg_butt_t:
+                            style "esrpg_butt"
+                    null width 25
+                    hbox:
+                        text "Здоровье [mob_nmn]:":
+                            style "esrpg_butt"
+                        null width 10
+                        text "[mob_h]/[mob_hmax] HP" at esrpg_butt_t:
+                            style "esrpg_butt"
+                if pnch_ver == 2:
+                    text "Удары: [disp_cnt_pnch]" at esrpg_butt_t:
+                        style "esrpg_butt"
+                else:
+                    pass
 
     text '[if_heal]' xpos 0.5 ypos 0.5 at esrpg_butt_t:
         style 'esrpg_greeni'
@@ -602,14 +674,25 @@ screen bat_gui(hero_state):
         ypos .80
         vbox:
             hbox:
+
                 if not_av == 1:
                     textbutton "*Недоступно*" at esrpg_butt_t:
                         style "esrpg_un"
                         text_style "esrpg_un"
                 else:
-                    textbutton "Атаковать" action [Function(renpy.hide_screen, 'bat_gui'), Function(pnch, hero_state)] at esrpg_butt_t:
-                        style "esrpg_butt"
-                        text_style "esrpg_butt"
+                    if pnch_ver == 1:
+                        textbutton "Атаковать" action [Function(renpy.hide_screen, 'bat_gui'), Function(pnch, hero_state)] at esrpg_butt_t:
+                            style "esrpg_butt"
+                            text_style "esrpg_butt"
+                    if pnch_ver == 2:
+                        if cnt_pnch == 0:
+                            textbutton "*Недоступно*" at esrpg_butt_t:
+                                style "esrpg_un"
+                                text_style "esrpg_un"
+                        else:
+                            textbutton "Атаковать" action [Function(renpy.hide_screen, 'bat_gui'), Function(pnch_v2, hero_state)] at esrpg_butt_t:
+                                style "esrpg_butt"
+                                text_style "esrpg_butt"
 
                 null width 25
 
