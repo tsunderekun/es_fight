@@ -202,8 +202,8 @@ init python:
         global if_heal
         mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
-        hero_bonus = renpy.random.randint (1, 2)
-        hero_pow = renpy.random.randint (5, 10) * hero_bonus
+        hero_bonus = renpy.random.randint (1, hero_mul)
+        hero_pow = renpy.random.randint (4, 11) * hero_bonus
         defrand = renpy.random.randint (1, 2)
         if defrand == 1:
             global mob_h
@@ -232,7 +232,7 @@ init python:
         global if_heal
         mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
-        hero_pow = renpy.random.randint (5, 10)
+        hero_pow = renpy.random.randint (4, 11)
         defrand = renpy.random.randint (1, 2)
         if defrand == 1:
             global mob_h
@@ -267,13 +267,13 @@ init python:
         if_heal = ''
         global if_heal
         if pnch_ver == 2:
-            mob_sec = renpy.random.randint (mob_speed_min + 1, mob_speed_max + 1)
+            mob_sec = renpy.random.randint (int (mob_speed_max * 1.75), int (mob_speed_max * 1.75))
         else:
             mob_sec = renpy.random.randint (4, 10)
         global mob_sec
         mob_pow = (renpy.random.randint (0, 4) * renpy.random.randint (1, 3))
-        defrand = renpy.random.randint (1, 2)
-        if defrand == 2:
+        defrand = renpy.random.random()
+        if defrand < 0.33:
             global hero_h
             hero_h -= mob_pow
             haction = "Я уклонился, но потерял " + str(mob_pow) + " HP"
@@ -298,8 +298,8 @@ init python:
         mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
         mob_pow = (renpy.random.randint (5, 10) * renpy.random.randint (1, mob_mxp))
-        defrand = renpy.random.randint (1, 2)
-        if defrand == 2:
+        defrand = renpy.random.random()
+        if defrand > 0.20:
             not_av = 1
             if pnch_ver == 2:
                 cnt_pnch = 0
@@ -332,7 +332,7 @@ init python:
         defrand = renpy.random.randint (1, 2)
         if defrand == 2:
             global hero_h
-            healed_h = (renpy.random.randint (10, 30))
+            healed_h = (renpy.random.randint (int (hero_heal / 3), int (hero_heal / 2)))
             hero_h = hero_h + healed_h
             global healed_h
             if_heal = "+" + str(healed_h) + " HP"
@@ -344,7 +344,7 @@ init python:
         else:
             global hero_h
             global mob_h
-            healed_h = (renpy.random.randint (5, 15))
+            healed_h = (renpy.random.randint (int (hero_heal / 3), int (hero_heal / 2)))
             healed_m = (renpy.random.randint (0, 10))
             hero_h = hero_h + healed_h
             global healed_h
@@ -371,7 +371,6 @@ init python:
 
 
 label rpgdsc:
-    play music music_list["into_the_unknown"] fadein 2
     show dsc text at truecenter with dissolve
     $ renpy.pause(5, hard = True)
     hide dsc text with dissolve
@@ -381,6 +380,7 @@ label rpgdsc:
 
 
 label prep:
+    play music music_list["into_the_unknown"] fadein 2
     $cnt_pnch = 10
     $cnt_pnch_all = 10
     $pnch_ver = 0
@@ -401,45 +401,50 @@ label prep:
     $mob_mxp = 3
     $mob_speed_min = 1
     $mob_speed_max = 3
+    $hero_mul = 2
     $disp_cnt_pnch = ''
+    $prolog_time()
     scene anim prolog_1 with dspr
     menu:
-        "{size=40}{font=battle_f.ttf}{b}Выбери метод ударов:{/b}{/font}"
+        "{size=40}{font=battle_f.ttf}{b}Выбери метод восстановления:{/b}{/font}"
         "{font=battle_f.ttf}Радном{/font}":
             $pnch_ver = 1
         "{font=battle_f.ttf}Защита{/font}":
             $pnch_ver = 2
-
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери сложность:{/b}{/font}"
         "{font=battle_f.ttf}Легкий{/font}":
-            $cnt_pnch = 10
-            $cnt_pnch_all = 10
+            $cnt_pnch = 7
+            $cnt_pnch_all = 7
             $hero_hmax = 200
             $hero_hmaxi = 201
             $hero_h = 200
             $hero_heal = 100
+            $hero_mul = 4
         "{font=battle_f.ttf}Средний{/font}":
-            $cnt_pnch = 8
-            $cnt_pnch_all = 8
+            $cnt_pnch = 5
+            $cnt_pnch_all = 5
             $hero_hmax = 100
             $hero_hmaxi = 125
             $hero_h = 100
             $hero_heal = 50
+            $hero_mul = 3
         "{font=battle_f.ttf}Сложный{/font}":
-            $cnt_pnch = 4
-            $cnt_pnch_all = 4
+            $cnt_pnch = 3
+            $cnt_pnch_all = 3
             $hero_hmax = 75
             $hero_hmaxi = 100
             $hero_h = 75
             $hero_heal = 25
+            $hero_mul = 2
         "{font=battle_f.ttf}{color=#f00}Даже не пытайся{/color}{/font}":
-            $cnt_pnch = 3
-            $cnt_pnch_all = 3
+            $cnt_pnch = 2
+            $cnt_pnch_all = 2
             $hero_hmax = 50
             $hero_hmaxi = 75
             $hero_h = 50
             $hero_heal = 25
+            $hero_mul = 2
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери противника:{/b}{/font}"
         "{size=40}{font=battle_f.ttf}{b}Легкие:{/b}{/font}{/size}"
@@ -542,26 +547,53 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 1
             $mob_mxp = 9
+        "{size=40}{font=battle_f.ttf}{b}Особые:{/b}{/font}{/size}"
+        "{font=battle_f.ttf}Случайная Конфигурация Противника{/font}":
+            $mob_name = renpy.random.choice(['prg_tolyan', 'mt rage pioneer far', 'sl angry pioneer far', 'un rage pioneer far', 'us angry pioneer far', 'mz rage pioneer far', 'uv rage far' ,'el angry pioneer far', 'mi rage pioneer far', 'pi normal' ,'sh rage pioneer far', 'dv rage pioneer far'])
+            $mob_nmn = 'СКП'
+            $mob_hmax = renpy.random.randint (50, 1000)
+            $mob_h = mob_hmax
+            $mob_speed_min = renpy.random.randint (1, 2)
+            $mob_speed_max = renpy.random.randint (2, 9)
+            $mob_mxp = randscene = renpy.random.randint (4, 8)
         "{size=40}{font=battle_f.ttf}{b}Покинуть поле боя{/b}{/font}{/size}":
             jump splashscreen
-    stop music fadeout 2
-    $ randscene = renpy.random.randint (0, 2)
-    if randscene == 0:
-        $day_time()
-        $persistent.sprite_time = "day"
-        show bg ext_square_day with dissolve
-        $randbg = "bg ext_square_day"
-    if randscene == 1:
-        $sunset_time()
-        $persistent.sprite_time = "sunset"
-        show bg ext_polyana_sunset with dissolve
-        $randbg = "bg ext_polyana_sunset"
-    if randscene == 2:
-        $night_time()
-        $persistent.sprite_time = "night"
-        show bg int_mine_room with dissolve
-        $randbg = "bg int_mine_room"
 
+    menu:
+        "{size=40}{font=battle_f.ttf}{b}Выбери локацию{/b}{/font}{/size}"
+        "{font=battle_f.ttf}Случайно{/font}":
+            stop music fadeout 2
+            $ randscene = renpy.random.randint (0, 2)
+            if randscene == 0:
+                $day_time()
+                $persistent.sprite_time = "day"
+                show bg ext_square_day with dissolve
+                $randbg = "bg ext_square_day"
+            if randscene == 1:
+                $sunset_time()
+                $persistent.sprite_time = "sunset"
+                show bg ext_polyana_sunset with dissolve
+                $randbg = "bg ext_polyana_sunset"
+            if randscene == 2:
+                $night_time()
+                $persistent.sprite_time = "night"
+                show bg int_mine_room with dissolve
+                $randbg = "bg int_mine_room"
+        "{font=battle_f.ttf}Площадь{/font}":
+            $day_time()
+            $persistent.sprite_time = "day"
+            show bg ext_square_day with dissolve
+            $randbg = "bg ext_square_day"
+        "{font=battle_f.ttf}Поляна{/font}":
+            $sunset_time()
+            $persistent.sprite_time = "sunset"
+            show bg ext_polyana_sunset with dissolve
+            $randbg = "bg ext_polyana_sunset"
+        "{font=battle_f.ttf}Катакомбы{/font}":
+            $night_time()
+            $persistent.sprite_time = "night"
+            show bg int_mine_room with dissolve
+            $randbg = "bg int_mine_room"
     $ renpy.show(mob_name, [center])
     $ renpy.with_statement(dspr, always=False)
     $ randmus = renpy.random.choice([music_list["doomed_to_be_defeated"], music_list["awakening_power"] , music_list["scarytale"]])
@@ -612,17 +644,7 @@ label check:
             renpy.with_statement(dissolve2, always=False)
             renpy.jump('prep')
         if hero_h > hero_hmaxi:
-            renpy.play('lose.mp3', channel = 'sound')
-            renpy.music.stop(channel='music', fadeout=2)
-            renpy.show('lose text', [truecenter, textrp])
-            renpy.show(randbg, [punch_lose])
-            renpy.show(mob_name, [punch_lose])
-            renpy.pause(10, hard = True)
-            renpy.hide(randbg)
-            renpy.hide(mob_name)
-            renpy.show('anim prolog_1')
-            renpy.with_statement(dissolve2, always=False)
-            renpy.jump('prep')
+            hero_h = hero_hmax
         else:
             renpy.call_screen("bat_gui", hero_state)
 
@@ -740,8 +762,14 @@ screen bat_gui(hero_state):
             xalign 0.8
             ypos .5
             vbox:
-                text "Атака может быть недоступна из-за того, что вас ударили. \n Чтобы её восстановить нажмите \"Защита\". \n Восстановление здоровье возможно, если оно ниже 50 пунктов."  at esrpg_butt_t:
-                        style "esrpg_greeny"
+                if pnch_ver == 1:
+                    text "Атака может быть недоступна из-за того, что вас ударили. \n Чтобы её восстановить нажмите \"Защита\". \n Восстановление здоровье возможно, если оно ниже [hero_heal] пунктов."  at esrpg_butt_t:
+                            style "esrpg_greeny"
+
+                if pnch_ver == 2:
+                    text " \n Чтобы восстановить пункты атаки нажмите \"Защита\". \n Восстановление здоровье возможно, если оно ниже [hero_heal] пунктов."  at esrpg_butt_t:
+                            style "esrpg_greeny"
+
 
                 textbutton "Закрыть" action Function(helpsme) at esrpg_butt_t:
                     style "esrpg_butt"
