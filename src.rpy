@@ -34,108 +34,67 @@ init:
     image heal text = Text('Восстановлено ' + str(healed_h) + 'HP', style = 'esrpg_green')
     image dsc text = Text('Внимание! \n Данный мод не преследует цели унизить чью-нибудь вайфу, \n а также не призывает к насилию в реальной жизни. \n \n \n \n \n \n \n \n Я вас предупредил и теперь удаляюсь... \n Приятной игры!', style = 'esrpg_green')
 
-    transform textrp:
-        easeout_back .25 zoom 0.1
-        easein_back .50 zoom 1
-        easeout_back .75 zoom 2
-        1.0
-        easein_back .25 zoom 0
+    if persistent.method_an == 'new':
+        transform textrp:
+            easeout_back .25 zoom 0.1
+            easein_back .50 zoom 1
+            easeout_back .75 zoom 2
+            1.0
+            easein_back .25 zoom 0
 
 
-    transform esrpg_butt_t():
-        on idle:
-            easeout_back 0.25 zoom 1.0
-        on hover:
-            easein_back 0.25 zoom 1.25
-        on update:
-            easeout_back 0.25 zoom 1.0
+        transform esrpg_butt_t():
+            on idle:
+                easeout_back 0.25 zoom 1.0
+            on hover:
+                easein_back 0.25 zoom 1.25
+            on update:
+                easeout_back 0.25 zoom 1.0
 
-    transform punch_1:
-        choice:
+        transform punch_1:
             easeout 0.5 zoom 1.2
             easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-        choice:
-            easeout 0.5 xpos 1.1
+            easein 0.5 zoom 1.0
             easein 0.5 xpos 0.5
-            easeout 0.5 zoom 0.9
-            easein 0.5 zoom 1.0
             easein 0.1 xalign 0.5
             easein 0.1 yalign 0.5
-        choice:
-            easeout 0.5 xpos 1.2
+            easein 0.1 rotate 0
+
+
+
+        transform punch_me:
+            easeout 0.5 zoom 1.2
+            easein 0.5 zoom 1.0
+            easein 0.5 zoom 1.0
             easein 0.5 xpos 0.5
-            easeout 0.5 zoom 0.7
-            easein 0.5 zoom 1.0
             easein 0.1 xalign 0.5
             easein 0.1 yalign 0.5
-
-    transform punch_2:
-        choice:
-            easeout 0.5 zoom 1.2
-            easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-        choice:
-            easeout 0.5 zoom 1.4
-            easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-
-    transform punch_me:
-        choice:
-            easeout 0.5 zoom 1.2
-            easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-
-        choice:
-            easeout 0.5 zoom 1.2
-            easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-
-    transform punch_me_bg:
-        choice:
-            easeout 0.5 zoom 1.2
-            easeout 0.5 rotate 30
-            easein 0.5 zoom 1.0
             easein 0.1 rotate 0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-        choice:
-            easeout 0.5 zoom 1.2
-            easeout 0.5 rotate 15
-            easein 0.5 zoom 1.0
-            easein 0.1 rotate 0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
 
-    transform punch_bg:
-        choice:
+        transform punch_me_bg:
+            easeout 0.5 zoom 1.2
+            easeout 0.5 rotate 10
+            easeout 0.5 zoom 1.2
+            easeout 0.5 rotate -10
+            easein 0.5 zoom 1.0
+            easein 0.5 xpos 0.5
+            easein 0.1 xalign 0.5
+            easein 0.1 yalign 0.5
+            easein 0.1 rotate 0
+
+        transform punch_bg:
             easeout 0.5 zoom 1.5
             easein 0.5 zoom 1.0
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-            easein 0.1 rotate 0
-        choice:
-            easeout 0.5 zoom 1.5
             easein 0.5 zoom 1.0
+            easein 0.5 xpos 0.5
             easein 0.1 xalign 0.5
             easein 0.1 yalign 0.5
             easein 0.1 rotate 0
 
-    transform punch_bg_def:
-        choice:
+
+        transform punch_bg_def:
             easeout 0.5 zoom 1.1
             easeout 0.5 xpos 0.6
-            easein 0.5 zoom 1.0
-            easein 0.5 xpos 0.5
-            easein 0.1 xalign 0.5
-            easein 0.1 yalign 0.5
-            easein 0.1 rotate 0
-        choice:
             easeout 0.5 zoom 1.2
             easeout 0.5 xpos 0.4
             easein 0.5 zoom 1.0
@@ -143,34 +102,221 @@ init:
             easein 0.1 xalign 0.5
             easein 0.1 yalign 0.5
             easein 0.1 rotate 0
-    transform punch_win:
-        easein 0.5 zoom 1.0
-        easein 0.1 xalign 0.5
-        easein 0.1 yalign 0.5
-        easein 0.1 rotate 0
-        easein 2 ypos 0.9
-        easein 0.75 rotate 5
-        easein 0.75 rotate -5
-        easein 0.75 rotate 15
-        easein 0.75 rotate -15
-        easein 0.75 rotate 90
-        1.0
-        easein 0.75 ypos 0.99
 
-    transform punch_lose:
-        easein 0.5 zoom 1.0
-        easein 0.1 xalign 0.5
-        easein 0.1 yalign 0.5
-        easein 0.1 rotate 0
-        easeout 0.5 zoom 2
-        easein 2 ypos 0.8
-        easein 0.75 rotate 5
-        easein 0.75 rotate -5
-        easein 0.75 rotate 15
-        easein 0.75 rotate -15
-        easein 0.75 rotate 90
-        1.0
-        easein 0.75 ypos 0.1
+
+        transform punch_moving:
+            choice:
+                easein 0.5 zoom 1.0
+                easein 2 xpos 0.5
+                easeout 2 xpos 0.6
+                easein 2 xpos 0.5
+                easeout 2 xpos 0.4
+                easein 2 xpos 0.5
+                repeat
+            choice:
+                easein 0.5 zoom 1.0
+                easein 2 xpos 0.5
+                easeout 2 xpos 0.7
+                easein 2 xpos 0.5
+                easeout 2 xpos 0.3
+                easein 2 xpos 0.5
+                repeat
+
+        transform punch_win:
+            easein 0.5 zoom 1.0
+            easein 0.1 xalign 0.5
+            easein 0.1 yalign 0.5
+            easein 0.1 rotate 0
+            easein 2 ypos 0.9
+            easein 0.75 rotate 5
+            easein 0.75 rotate -5
+            easein 0.75 rotate 15
+            easein 0.75 rotate -15
+            easein 0.75 rotate 90
+            easein 0.2 zoom 0.5
+            easein 0.75 ypos 0.99
+
+
+        transform punch_lose:
+            easein 0.5 zoom 1.0
+            easein 0.1 xalign 0.5
+            easein 0.1 yalign 0.5
+            easein 0.1 rotate 0
+            easeout 0.5 zoom 2
+            easein 2 ypos 0.8
+            easein 0.75 rotate 5
+            easein 0.75 rotate -5
+            easein 0.75 rotate 15
+            easein 0.75 rotate -15
+            easein 0.75 rotate 90
+            1.0
+            easein 0.75 ypos 0.1
+
+    if persistent.method_an == 'old':
+        transform textrp:
+            easeout_back .25 zoom 0.1
+            easein_back .50 zoom 1
+            easeout_back .75 zoom 2
+            1.0
+            easein_back .25 zoom 0
+
+        transform punch_moving:
+            pass
+
+        transform esrpg_butt_t():
+            on idle:
+                easeout_back 0.25 zoom 1.0
+            on hover:
+                easein_back 0.25 zoom 1.25
+            on update:
+                easeout_back 0.25 zoom 1.0
+
+        transform punch_1:
+            choice:
+                easeout 0.5 zoom 1.2
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+            choice:
+                easeout 0.5 xpos 1.1
+                easein 0.5 xpos 0.5
+                easeout 0.5 zoom 0.9
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+            choice:
+                easeout 0.5 xpos 1.2
+                easein 0.5 xpos 0.5
+                easeout 0.5 zoom 0.7
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+
+        transform punch_2:
+            choice:
+                easeout 0.5 zoom 1.2
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+            choice:
+                easeout 0.5 zoom 1.4
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+
+        transform punch_me:
+            choice:
+                easeout 0.5 zoom 1.2
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+
+            choice:
+                easeout 0.5 zoom 1.2
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+
+        transform punch_me_bg:
+            choice:
+                easeout 0.5 zoom 1.2
+                easeout 0.5 rotate 30
+                easein 0.5 zoom 1.0
+                easein 0.1 rotate 0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+            choice:
+                easeout 0.5 zoom 1.2
+                easeout 0.5 rotate 15
+                easein 0.5 zoom 1.0
+                easein 0.1 rotate 0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+
+        transform punch_bg:
+            choice:
+                easeout 0.5 zoom 1.5
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+                easein 0.1 rotate 0
+            choice:
+                easeout 0.5 zoom 1.5
+                easein 0.5 zoom 1.0
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+                easein 0.1 rotate 0
+
+        transform punch_bg_def:
+            choice:
+                easeout 0.5 zoom 1.1
+                easeout 0.5 xpos 0.6
+                easein 0.5 zoom 1.0
+                easein 0.5 xpos 0.5
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+                easein 0.1 rotate 0
+            choice:
+                easeout 0.5 zoom 1.2
+                easeout 0.5 xpos 0.4
+                easein 0.5 zoom 1.0
+                easein 0.5 xpos 0.5
+                easein 0.1 xalign 0.5
+                easein 0.1 yalign 0.5
+                easein 0.1 rotate 0
+        transform punch_win:
+            easein 0.5 zoom 1.0
+            easein 0.1 xalign 0.5
+            easein 0.1 yalign 0.5
+            easein 0.1 rotate 0
+            easein 2 ypos 0.9
+            easein 0.75 rotate 5
+            easein 0.75 rotate -5
+            easein 0.75 rotate 15
+            easein 0.75 rotate -15
+            easein 0.75 rotate 90
+            1.0
+            easein 0.75 ypos 0.99
+
+        transform punch_lose:
+            easein 0.5 zoom 1.0
+            easein 0.1 xalign 0.5
+            easein 0.1 yalign 0.5
+            easein 0.1 rotate 0
+            easeout 0.5 zoom 2
+            easein 2 ypos 0.8
+            easein 0.75 rotate 5
+            easein 0.75 rotate -5
+            easein 0.75 rotate 15
+            easein 0.75 rotate -15
+            easein 0.75 rotate 90
+            1.0
+            easein 0.75 ypos 0.1
+
+
+    if persistent.method_an == 'none':
+            transform textrp:
+                pass
+            transform punch_moving:
+                pass
+            transform esrpg_butt_t():
+                pass
+            transform punch_1:
+                pass
+            transform punch_2:
+                pass
+            transform punch_me:
+                pass
+            transform punch_me_bg:
+                pass
+            transform punch_bg:
+                pass
+            transform punch_bg_def:
+                pass
+            transform punch_win:
+                pass
+            transform punch_lose:
+                pass
 
 
 
@@ -210,10 +356,6 @@ init python:
             mob_h -= hero_pow
             haction = "Я ударил противника " + mob_nmn + " и отнял " + str(hero_pow) + " HP"
             global haction
-            renpy.play('PUNCH.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_1])
-            renpy.show(randbg, [punch_bg])
-            renpy.jump('check')
 
         else:
             not_av = renpy.random.randint (0, 1)
@@ -222,17 +364,18 @@ init python:
             mob_h -= 0
             haction = "Промазал"
             global haction
-            renpy.play('PUNCH.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_2])
-            renpy.show(randbg, [punch_bg])
-            renpy.jump('check')
+
+        renpy.play('PUNCH.mp3', channel = 'sound')
+        renpy.show(mob_name, [punch_1, punch_moving])
+        renpy.show(randbg, [punch_bg])
+        renpy.jump('check')
 
     def pnch_v2(hero_state):
         if_heal = ''
         global if_heal
         mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
         global mob_sec
-        hero_pow = renpy.random.randint (4, 11)
+        hero_pow = renpy.random.randint (int (8 * hero_hard), int (22 * hero_hard))
         defrand = renpy.random.randint (1, 2)
         if defrand == 1:
             global mob_h
@@ -241,10 +384,6 @@ init python:
             global haction
             cnt_pnch -= 1
             global cnt_pnch
-            renpy.play('PUNCH.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_1])
-            renpy.show(randbg, [punch_bg])
-            renpy.jump('check')
 
         else:
             cnt_pnch -= 1
@@ -253,10 +392,11 @@ init python:
             mob_h -= 0
             haction = "Промазал"
             global haction
-            renpy.play('PUNCH.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_2])
-            renpy.show(randbg, [punch_bg])
-            renpy.jump('check')
+
+        renpy.play('PUNCH.mp3', channel = 'sound')
+        renpy.show(mob_name, [punch_1, punch_moving])
+        renpy.show(randbg, [punch_bg])
+        renpy.jump('check')
 
     def defn(hero_state):
         if pnch_ver == 2:
@@ -267,39 +407,38 @@ init python:
         if_heal = ''
         global if_heal
         if pnch_ver == 2:
-            mob_sec = renpy.random.randint (int (mob_speed_max * 1.75), int (mob_speed_max * 1.75))
+            mob_sec = renpy.random.randint (int (mob_speed_max * 1.25), int (mob_speed_max * 1.75))
         else:
-            mob_sec = renpy.random.randint (4, 10)
+            mob_sec = renpy.random.randint (4, 7)
         global mob_sec
-        mob_pow = (renpy.random.randint (0, 4) * renpy.random.randint (1, 3))
+        mob_pow = (renpy.random.randint (0, 3) * renpy.random.randint (1, int (mob_mxp * hero_hard)))
         defrand = renpy.random.random()
         if defrand < 0.33:
             global hero_h
             hero_h -= mob_pow
             haction = "Я уклонился, но потерял " + str(mob_pow) + " HP"
             global haction
-            renpy.play('defend.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_me])
-            renpy.show(randbg, [punch_bg_def])
-            renpy.jump('check')
+            renpy.show(mob_name, [punch_me, punch_moving])
+
         else:
             global hero_h
             hero_h -= 0
             haction = "Я уклонился"
             global haction
-            renpy.play('defend.mp3', channel = 'sound')
-            renpy.show(randbg, [punch_bg_def])
-            renpy.jump('check')
+
+        renpy.play('defend.mp3', channel = 'sound')
+        renpy.show(randbg, [punch_bg_def])
+        renpy.jump('check')
 
 
     def noth(hero_state):
         if_heal = ''
         global if_heal
-        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max)
+        mob_sec = renpy.random.randint (mob_speed_min, mob_speed_max + 1)
         global mob_sec
-        mob_pow = (renpy.random.randint (5, 10) * renpy.random.randint (1, mob_mxp))
+        mob_pow = (renpy.random.randint (5, 6) * renpy.random.randint (1, int (mob_mxp * hero_hard)))
         defrand = renpy.random.random()
-        if defrand > 0.20:
+        if defrand > (0.20 * hero_hard) :
             not_av = 1
             if pnch_ver == 2:
                 cnt_pnch = 0
@@ -308,19 +447,17 @@ init python:
             hero_h -= mob_pow
             haction = "Я потерял " + str(mob_pow) + " HP"
             global haction
-            renpy.play('attack.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_me])
-            renpy.show(randbg, [punch_me_bg])
-            renpy.jump('check')
+
         else:
             global hero_h
             hero_h -= 0
             haction = "Я уклонился"
             global haction
-            renpy.play('attack.mp3', channel = 'sound')
-            renpy.show(mob_name, [punch_me])
-            renpy.show(randbg, [punch_me_bg])
-            renpy.jump('check')
+
+        renpy.play('attack.mp3', channel = 'sound')
+        renpy.show(mob_name, [punch_me, punch_moving])
+        renpy.show(randbg, [punch_me_bg])
+        renpy.jump('check')
 
 
 
@@ -337,10 +474,7 @@ init python:
             global healed_h
             if_heal = "+" + str(healed_h) + " HP"
             global if_heal
-            haction = "Я восстановил " + str(healed_h) + " HP"
-            global haction
-            renpy.play('defend.mp3', channel = 'sound')
-            renpy.jump('check')
+
         else:
             global hero_h
             global mob_h
@@ -351,10 +485,11 @@ init python:
             if_heal = "+" + str(healed_h) + " HP"
             global if_heal
             mob_h += healed_m
-            haction = "Я восстановил " + str(healed_h) + " HP"
-            global haction
-            renpy.play('defend.mp3', channel = 'sound')
-            renpy.jump('check')
+
+        haction = "Я восстановил " + str(healed_h) + " HP"
+        global haction
+        renpy.play('defend.mp3', channel = 'sound')
+        renpy.jump('check')
 
     def runaway():
         renpy.jump('prep')
@@ -381,6 +516,7 @@ label rpgdsc:
 
 label prep:
     play music music_list["into_the_unknown"] fadein 2
+    $hero_hard = 0.50
     $cnt_pnch = 10
     $cnt_pnch_all = 10
     $pnch_ver = 0
@@ -405,6 +541,37 @@ label prep:
     $disp_cnt_pnch = ''
     $prolog_time()
     scene anim prolog_1 with dspr
+    if persistent.method_an is None:
+        $ frs_anim = 1
+        $ frs_txt = 'Первый запуск. Требуется перезапуск'
+    if persistent.method_an is not None:
+        $ frs_anim = 0
+        $ frs_txt = 'Смена анимации будет произведена после ручного перезапуска'
+
+    menu:
+
+        "{size=40}{font=battle_f.ttf}{b}Выбери режим анимаций:{/b}{/font}"
+
+
+        "{font=battle_f.ttf}[frs_txt]{/font}"
+
+        "{font=battle_f.ttf}Кривой новый{/font}":
+            $persistent.method_an = 'new'
+
+        "{font=battle_f.ttf}Кривой старый{/font}":
+            $persistent.method_an = 'old'
+
+        "{font=battle_f.ttf}Отключить{/font}":
+            $persistent.method_an = 'none'
+
+        "{font=battle_f.ttf}Далее{/font}":
+            pass
+
+
+    if frs_anim == 1:
+        $renpy.utter_restart()
+
+
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери метод восстановления:{/b}{/font}"
         "{font=battle_f.ttf}Радном{/font}":
@@ -414,6 +581,7 @@ label prep:
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери сложность:{/b}{/font}"
         "{font=battle_f.ttf}Легкий{/font}":
+            $hero_hard = 0.50
             $cnt_pnch = 7
             $cnt_pnch_all = 7
             $hero_hmax = 200
@@ -422,6 +590,7 @@ label prep:
             $hero_heal = 100
             $hero_mul = 4
         "{font=battle_f.ttf}Средний{/font}":
+            $hero_hard = 0.75
             $cnt_pnch = 5
             $cnt_pnch_all = 5
             $hero_hmax = 100
@@ -430,6 +599,7 @@ label prep:
             $hero_heal = 50
             $hero_mul = 3
         "{font=battle_f.ttf}Сложный{/font}":
+            $hero_hard = 1.15
             $cnt_pnch = 3
             $cnt_pnch_all = 3
             $hero_hmax = 75
@@ -438,6 +608,7 @@ label prep:
             $hero_heal = 25
             $hero_mul = 2
         "{font=battle_f.ttf}{color=#f00}Даже не пытайся{/color}{/font}":
+            $hero_hard = 1.25
             $cnt_pnch = 2
             $cnt_pnch_all = 2
             $hero_hmax = 50
@@ -594,7 +765,9 @@ label prep:
             $persistent.sprite_time = "night"
             show bg int_mine_room with dissolve
             $randbg = "bg int_mine_room"
-    $ renpy.show(mob_name, [center])
+
+
+    $ renpy.show(mob_name, [center, punch_moving])
     $ renpy.with_statement(dspr, always=False)
     $ randmus = renpy.random.choice([music_list["doomed_to_be_defeated"], music_list["awakening_power"] , music_list["scarytale"]])
     play music randmus fadein 2
