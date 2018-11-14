@@ -596,25 +596,25 @@ label prep:
             $hero_hmax = 100
             $hero_hmaxi = 125
             $hero_h = 100
-            $hero_heal = 50
+            $hero_heal = 76
             $hero_mul = 3
         "{font=battle_f.ttf}Сложный{/font}":
-            $hero_hard = 1.15
+            $hero_hard = 1.25
             $cnt_pnch = 3
             $cnt_pnch_all = 3
             $hero_hmax = 75
             $hero_hmaxi = 100
             $hero_h = 75
-            $hero_heal = 25
+            $hero_heal = 51
             $hero_mul = 2
         "{font=battle_f.ttf}{color=#f00}Даже не пытайся{/color}{/font}":
-            $hero_hard = 1.25
+            $hero_hard = 1.50
             $cnt_pnch = 2
             $cnt_pnch_all = 2
             $hero_hmax = 50
             $hero_hmaxi = 75
             $hero_h = 50
-            $hero_heal = 25
+            $hero_heal = 36
             $hero_mul = 2
     menu:
         "{size=40}{font=battle_f.ttf}{b}Выбери противника:{/b}{/font}"
@@ -627,12 +627,29 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 2
             $mob_mxp = 2
+        "{font=battle_f.ttf}Электроник{/font}":
+            $mob_name = 'el angry pioneer far'
+            $mob_nmn = 'Электроник'
+            $mob_hmax = 90
+            $mob_h = 90
+            $mob_speed_min = 1
+            $mob_speed_max = 4
+            $mob_mxp = 3
+        "{size=40}{font=battle_f.ttf}{b}Средние:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Женя{/font}":
             $mob_name = 'mz rage pioneer far'
             $mob_nmn = 'Женя'
             $mob_hmax = 80
             $mob_h = 80
             $mob_speed_min = 2
+            $mob_speed_max = 3
+            $mob_mxp = 4
+        "{font=battle_f.ttf}Пионер{/font}":
+            $mob_name = 'pi normal'
+            $mob_nmn = 'Пионер'
+            $mob_hmax = 100
+            $mob_h = 100
+            $mob_speed_min = 1
             $mob_speed_max = 3
             $mob_mxp = 4
         "{font=battle_f.ttf}Юля{/font}":
@@ -643,15 +660,7 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 2
             $mob_mxp = 5
-        "{font=battle_f.ttf}Электроник{/font}":
-            $mob_name = 'el angry pioneer far'
-            $mob_nmn = 'Электроник'
-            $mob_hmax = 90
-            $mob_h = 90
-            $mob_speed_min = 1
-            $mob_speed_max = 4
-            $mob_mxp = 3
-        "{size=40}{font=battle_f.ttf}{b}Средние:{/b}{/font}{/size}"
+        "{size=40}{font=battle_f.ttf}{b}Сложные:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Мику{/font}":
             $mob_name = 'mi rage pioneer far'
             $mob_nmn = 'Мику'
@@ -660,14 +669,6 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 2
             $mob_mxp = 6
-        "{font=battle_f.ttf}Пионер{/font}":
-            $mob_name = 'pi normal'
-            $mob_nmn = 'Пионер'
-            $mob_hmax = 100
-            $mob_h = 100
-            $mob_speed_min = 1
-            $mob_speed_max = 3
-            $mob_mxp = 4
         "{font=battle_f.ttf}Шурик{/font}":
             $mob_name = 'sh rage pioneer far'
             $mob_nmn = 'Шурик'
@@ -684,15 +685,6 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 2
             $mob_mxp = 7
-        "{font=battle_f.ttf}Лена{/font}":
-            $mob_name = 'un rage pioneer far'
-            $mob_nmn = 'Лена'
-            $mob_hmax = 120
-            $mob_h = 120
-            $mob_speed_min = 1
-            $mob_speed_max = 1
-            $mob_mxp = 8
-        "{size=40}{font=battle_f.ttf}{b}Сложные:{/b}{/font}{/size}"
         "{font=battle_f.ttf}Славя{/font}":
             $mob_name = 'sl angry pioneer far'
             $mob_nmn = 'Славя'
@@ -701,6 +693,14 @@ label prep:
             $mob_speed_min = 1
             $mob_speed_max = 1
             $mob_mxp = 7
+        "{font=battle_f.ttf}Лена{/font}":
+            $mob_name = 'un rage pioneer far'
+            $mob_nmn = 'Лена'
+            $mob_hmax = 120
+            $mob_h = 120
+            $mob_speed_min = 1
+            $mob_speed_max = 1
+            $mob_mxp = 8
         "{font=battle_f.ttf}Ольга Дмитриевна{/font}":
             $mob_name = 'mt rage pioneer far'
             $mob_nmn = 'Ольга Дмитриевна'
